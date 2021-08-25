@@ -19,8 +19,10 @@ const FILE = './db.json';
 app.post('/marqeta', function (req: Request, res: Response) {
   console.log(`Post received`);
 
-  //Authenticate for 'marqeta:password'
-  const authBuffer = Buffer.from('marqeta:password').toString('base64');
+  //Authenticate for 'marqeta:MarqetaNeeds2HaveLongPasswords!'
+  const authBuffer = Buffer.from(
+    'marqeta:MarqetaNeeds2HaveLongPasswords!'
+  ).toString('base64');
   if (req.headers.authorization !== `Basic ${authBuffer}`) {
     return res.status(401).send('Authentication required');
   }
