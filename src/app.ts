@@ -40,8 +40,7 @@ app.post('/marqeta', function (req: Request, res: Response) {
         res.status(500).send(err);
       }
 
-      res.send('Request saved');
-      console.log('Request saved');
+      res.send(`Request saved, current count: ${newDb.length}`);
     });
   });
 });
@@ -54,4 +53,10 @@ app.get('/marqeta', function (req: Request, res: Response) {
 
     res.send(JSON.parse(data.toString()));
   });
+});
+
+app.get('/reset', function (req: Request, res: Response) {
+  fs.writeFileSync(FILE, '');
+
+  res.send('DB reset');
 });
