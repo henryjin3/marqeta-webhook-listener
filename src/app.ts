@@ -19,10 +19,18 @@ const FILE = './db.json';
 app.post('/marqeta', function (req: Request, res: Response) {
   console.log(`Post received`);
 
+  //Authenticate for 'marqeta:password'
+  const authBuffer = Buffer.from('marqeta:password').toString('base64');
+  if (req.headers.authorization !== `Basic ${authBuffer}`) {
+    return res.status(401).send('Authentication required');
+  }
+
   fs.readFile(FILE, function (err, data) {
     if (err) {
       res.status(500).send(err);
     }
+
+    //Get the old data and add in the new body
     const oldData = data.toString();
     const db = oldData ? JSON.parse(oldData) : [];
     const newDb = [...db, req.body];
