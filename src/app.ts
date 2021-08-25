@@ -52,7 +52,9 @@ app.get('/marqeta', function (req: Request, res: Response) {
     if (err) {
       res.status(500).send(err);
     }
-
+    if (!data) {
+      res.status(204);
+    }
     res.send(JSON.parse(data.toString()));
   });
 });
