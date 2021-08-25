@@ -16,8 +16,7 @@
   "scripts": {
     "start": "node dist/app.js",
     "dev": "nodemon src/app.ts",
-    "build": "tsc --project ./",
-    "postinstall": "tsc"
+    "build": "tsc --project ./"
   },
   "author": "",
   "license": "ISC"
