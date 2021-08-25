@@ -14,18 +14,27 @@ app.listen(port, function () {
 });
 
 app.use(express.json());
-
 const FILE = './db.json';
 
 app.post('/marqeta', function (req: Request, res: Response) {
   console.log(`Post received`);
-  fs.writeFile(FILE, JSON.stringify(req.body), function (err) {
+
+  fs.readFile(FILE, function (err, data) {
     if (err) {
       res.status(500).send(err);
     }
+    const oldData = data.toString();
+    const db = oldData ? JSON.parse(oldData) : [];
+    const newDb = [...db, req.body];
 
-    res.send('Request saved');
-    console.log('Request saved');
+    fs.writeFile(FILE, JSON.stringify(newDb), function (err) {
+      if (err) {
+        res.status(500).send(err);
+      }
+
+      res.send('Request saved');
+      console.log('Request saved');
+    });
   });
 });
 
@@ -35,6 +44,6 @@ app.get('/marqeta', function (req: Request, res: Response) {
       res.status(500).send(err);
     }
 
-    res.send(data);
+    res.send(JSON.parse(data.toString()));
   });
 });
