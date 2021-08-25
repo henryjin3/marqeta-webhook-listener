@@ -29,7 +29,7 @@ app.post('/marqeta', function (req: Request, res: Response) {
 
   fs.readFile(FILE, function (err, data) {
     if (err) {
-      res.status(500).send(err);
+      return res.status(500).send(err);
     }
 
     //Get the old data and add in the new body
@@ -39,10 +39,10 @@ app.post('/marqeta', function (req: Request, res: Response) {
 
     fs.writeFile(FILE, JSON.stringify(newDb), function (err) {
       if (err) {
-        res.status(500).send(err);
+        return res.status(500).send(err);
       }
 
-      res.send(`Request saved, current count: ${newDb.length}`);
+      return res.send(`Request saved, current count: ${newDb.length}`);
     });
   });
 });
@@ -50,12 +50,13 @@ app.post('/marqeta', function (req: Request, res: Response) {
 app.get('/marqeta', function (req: Request, res: Response) {
   fs.readFile(FILE, function (err, data) {
     if (err) {
-      res.status(500).send(err);
+      return res.status(500).send(err);
     }
-    if (!data) {
-      res.status(204);
+    const dataString = data.toString();
+    if (!dataString) {
+      return res.status(204).send('empty file');
     }
-    res.send(JSON.parse(data.toString()));
+    return res.send(JSON.parse(dataString));
   });
 });
 
