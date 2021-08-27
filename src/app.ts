@@ -59,9 +59,3 @@ app.get('/marqeta', function (req: Request, res: Response) {
     return res.send(JSON.parse(dataString));
   });
 });
-
-app.get('/reset', function (req: Request, res: Response) {
-  fs.writeFileSync(FILE, '');
-
-  res.send('DB reset');
-});
